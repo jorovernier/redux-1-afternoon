@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import store, {SET_FIRST,SET_LAST} from '../../store';
 import './Author.css';
 
 class Author extends Component {
   constructor(props) {
     super(props);
+    const reduxState = store.getState();
     this.state = {
-      authorFirst: '',
-      authorLast: ''
+      authorFirst: reduxState.authorFirst,
+      authorLast: reduxState.authorLast
     };
   }
 
@@ -23,7 +25,14 @@ class Author extends Component {
     });
   }
   saveChanges() {
-    // Send data to Redux state
+    store.dispatch({
+      type: SET_FIRST,
+      payload: this.state.authorFirst
+    })
+    store.dispatch({
+      type: SET_LAST,
+      payload: this.state.authorLast
+    })
   }
   render() {
     return (
